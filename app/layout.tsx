@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MakeDock - Create Your Custom macOS Dock",
-  description: "Design and customize your own macOS-style dock with drag and drop. Export as PNG or SVG.",
-  keywords: ["macOS", "dock", "customization", "design", "export"],
+  description: "Design and customize your own macOS-style dock with drag and drop. Export as PNG or SVG image.",
+  keywords: ["macOS", "dock", "create", "image", "export"],
 };
 
 export default function RootLayout({
