@@ -14,9 +14,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Download, ChevronDown, Image, FileCode, Copy, Check, Expand } from 'lucide-react';
 import { domToPng, domToSvg } from 'modern-screenshot';
+import { type Theme } from '@/lib/themes';
+import { toast } from 'sonner';
 
 interface ExportMenuProps {
   dockRef: React.RefObject<HTMLDivElement | null>;
+  theme: Theme;
 }
 
 type ExportSize = '2x' | '4x' | '6x';
@@ -52,7 +55,7 @@ async function fetchImageAsDataUrl(url: string): Promise<string | false> {
   }
 }
 
-export function ExportMenu({ dockRef }: ExportMenuProps) {
+export function ExportMenu({ dockRef, theme }: ExportMenuProps) {
   const [selectedSize, setSelectedSize] = useState<ExportSize>('2x');
   const [isExporting, setIsExporting] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -61,8 +64,12 @@ export function ExportMenu({ dockRef }: ExportMenuProps) {
     scale: sizeMultipliers[selectedSize],
     fetchFn: fetchImageAsDataUrl,
     timeout: 60000,
-    debug: true,
-  }), [selectedSize]);
+    backgroundColor: null,
+    style: {
+      // Use the selected theme's gradient
+      background: theme.gradient,
+    },
+  }), [selectedSize, theme]);
 
   const handleExportPng = useCallback(async () => {
     if (!dockRef.current) return;
@@ -72,12 +79,17 @@ export function ExportMenu({ dockRef }: ExportMenuProps) {
       const dataUrl = await domToPng(dockRef.current, getExportOptions());
       
       const link = document.createElement('a');
-      link.download = `makedock-${selectedSize}.png`;
+      link.download = `MakeDock ${selectedSize}.png`;
       link.href = dataUrl;
       link.click();
+      toast('PNG saved successfully!', {
+        description: `Exported at ${selectedSize} resolution`,
+      });
     } catch (error) {
       console.error('Failed to export PNG:', error);
-      alert('Failed to export. Please try again.');
+      toast.error('Failed to export PNG', {
+        description: 'Please try again.',
+      });
     } finally {
       setIsExporting(false);
     }
@@ -88,19 +100,32 @@ export function ExportMenu({ dockRef }: ExportMenuProps) {
     setIsExporting(true);
     
     try {
-      const dataUrl = await domToSvg(dockRef.current, getExportOptions());
+      // For SVG, use a solid background color since gradients don't render well
+      const svgOptions = {
+        scale: sizeMultipliers[selectedSize],
+        fetchFn: fetchImageAsDataUrl,
+        timeout: 60000,
+        backgroundColor: theme.solidColor, // Use theme's solid color
+      };
+      
+      const dataUrl = await domToSvg(dockRef.current, svgOptions);
       
       const link = document.createElement('a');
-      link.download = `makedock-${selectedSize}.svg`;
+      link.download = `MakeDock ${selectedSize}.svg`;
       link.href = dataUrl;
       link.click();
+      toast('SVG saved successfully!', {
+        description: `Exported at ${selectedSize} resolution`,
+      });
     } catch (error) {
       console.error('Failed to export SVG:', error);
-      alert('Failed to export. Please try again.');
+      toast.error('Failed to export SVG', {
+        description: 'Please try again.',
+      });
     } finally {
       setIsExporting(false);
     }
-  }, [dockRef, selectedSize, getExportOptions]);
+  }, [dockRef, selectedSize, theme]);
 
   const handleCopyImage = useCallback(async () => {
     if (!dockRef.current) return;
@@ -109,27 +134,51 @@ export function ExportMenu({ dockRef }: ExportMenuProps) {
     try {
       const dataUrl = await domToPng(dockRef.current, getExportOptions());
       
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
+      // Convert data URL to blob
+      const base64Data = dataUrl.split(',')[1];
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'image/png' });
+      
       await navigator.clipboard.write([
         new ClipboardItem({ 'image/png': blob }),
       ]);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      toast('Image copied to clipboard!', {
+        description: 'Ready to paste anywhere',
+      });
     } catch (error) {
       console.error('Failed to copy image:', error);
-      alert('Failed to copy image. Please try again.');
+      // Fallback: copy the data URL as text
+      try {
+        const dataUrl = await domToPng(dockRef.current, getExportOptions());
+        await navigator.clipboard.writeText(dataUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        toast('Image URL copied!', {
+          description: 'Data URL copied to clipboard',
+        });
+      } catch {
+        toast.error('Failed to copy image', {
+          description: 'Please try again.',
+        });
+      }
     } finally {
       setIsExporting(false);
     }
-  }, [dockRef, selectedSize, getExportOptions]);
+  }, [dockRef, getExportOptions]);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
           variant="default" 
-          className="gap-2 bg-red-500 hover:bg-red-600 text-white"
+          className="gap-2 bg-red-600 hover:bg-red-700 text-white"
           disabled={isExporting}
         >
           <Download className="h-4 w-4" />

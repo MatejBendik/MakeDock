@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,8 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen bg-white`}
       >
   {/* Dashed Grid */}
@@ -77,6 +79,7 @@ export default function RootLayout({
         <div className="relative z-10">
           {children}
         </div>
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );
