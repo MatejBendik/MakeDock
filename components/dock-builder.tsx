@@ -206,25 +206,25 @@ export function DockBuilder() {
             className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800"
           >
             {/* Preview Header */}
-            <div className="flex items-center justify-between border-b border-zinc-200 px-2 py-2 dark:border-zinc-700">
-              <div className="flex items-center text-zinc-600 dark:text-zinc-400 pl-2">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 px-2 ml-2 sm:ml-0 py-2 sm:px-4 dark:border-zinc-700">
+              <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
+                <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                   <circle cx="12" cy="12" r="3" />
                 </svg>
-                <span className="text-sm font-medium ml-2">Preview</span>
+                <span className="text-sm font-medium hidden sm:inline">Preview</span>
                 {mounted && (
                   <>
                     {/* Separator */}
-                    <div className="mx-3 ml-4 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+                    <div className="ml-2 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
                     <ThemeSelector
                       selectedTheme={selectedTheme}
                       onThemeChange={setSelectedTheme}
                     />
                     {/* Separator */}
-                    <div className="mx-4 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+                    <div className="mr-2 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
                     {/* Open All Apps Switch */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <Switch
                         id="open-all-apps"
                         checked={allAppsOpen}
@@ -232,7 +232,7 @@ export function DockBuilder() {
                       />
                       <label
                         htmlFor="open-all-apps"
-                        className="text-sm font-medium text-zinc-600 dark:text-zinc-400 cursor-pointer"
+                        className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 cursor-pointer whitespace-nowrap"
                       >
                         Open All
                       </label>

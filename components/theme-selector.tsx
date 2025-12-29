@@ -20,12 +20,12 @@ export function ThemeSelector({ selectedTheme, onThemeChange }: ThemeSelectorPro
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-2 h-8 px-2">
+        <Button variant="ghost" size="sm" className="gap-1.5 sm:gap-2 h-8 px-2">
           <div
-            className="h-4 w-4 rounded-full border border-zinc-300 dark:border-zinc-600"
+            className="h-4 w-4 rounded-full border border-zinc-300 dark:border-zinc-600 shrink-0"
             style={{ background: selectedTheme.gradient }}
           />
-          <span className="text-sm font-medium">{selectedTheme.name}</span>
+          <span className="text-sm font-medium hidden xs:inline sm:inline">{selectedTheme.name}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-44">

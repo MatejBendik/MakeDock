@@ -178,11 +178,11 @@ export function ExportMenu({ dockRef, theme }: ExportMenuProps) {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="default" 
-          className="gap-2 bg-red-600 hover:bg-red-700 text-white"
+          className="gap-1.5 sm:gap-2 bg-red-600 hover:bg-red-700 text-white px-2.5 sm:px-4"
           disabled={isExporting}
         >
           <Download className="h-4 w-4" />
-          Export Image
+          <span className="hidden sm:inline">Export</span>
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>

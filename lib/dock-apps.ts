@@ -13,19 +13,24 @@ export const defaultApps: DockApp[] = [
     icon: 'https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024'
   },
   {
-    id: 'calculator',
-    name: 'Calculator',
-    icon: 'https://cdn.jim-nielsen.com/macos/1024/calculator-2021-04-29.png?rf=1024'
+    id: 'safari',
+    name: 'Safari',
+    icon: 'https://cdn.jim-nielsen.com/macos/1024/safari-2021-06-02.png?rf=1024'
   },
   {
-    id: 'terminal',
-    name: 'Terminal',
-    icon: 'https://cdn.jim-nielsen.com/macos/1024/terminal-2021-06-03.png?rf=1024'
+    id: 'messages',
+    name: 'Messages',
+    icon: 'https://cdn.jim-nielsen.com/macos/1024/messages-2021-05-25.png?rf=1024'
   },
   {
     id: 'mail',
     name: 'Mail',
     icon: 'https://cdn.jim-nielsen.com/macos/1024/mail-2021-05-25.png?rf=1024'
+  },
+  {
+    id: 'maps',
+    name: 'Maps',
+    icon: 'https://cdn.jim-nielsen.com/macos/1024/maps-2021-05-25.png?rf=1024'
   }
 ];
 
