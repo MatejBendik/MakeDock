@@ -23,6 +23,7 @@ import { AppSelector } from '@/components/app-selector';
 import { ExportMenu } from '@/components/export-menu';
 import { ThemeSelector } from '@/components/theme-selector';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { Github } from 'lucide-react';
 import { defaultApps, type DockApp } from '@/lib/dock-apps';
 import { themes, defaultTheme, type Theme } from '@/lib/themes';
@@ -31,6 +32,7 @@ import Link from 'next/dist/client/link';
 export function DockBuilder() {
   const [apps, setApps] = useState<DockApp[]>(defaultApps);
   const [openApps, setOpenApps] = useState<string[]>([]);
+  const [allAppsOpen, setAllAppsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState<Theme>(defaultTheme);
   const dockPreviewRef = useRef<HTMLDivElement>(null);
@@ -83,6 +85,27 @@ export function DockBuilder() {
         : [...prev, appId]
     );
   }, []);
+
+  const handleToggleAllApps = useCallback((open: boolean) => {
+    setAllAppsOpen(open);
+    if (open) {
+      // Open all apps with staggered animation
+      apps.forEach((app, index) => {
+        setTimeout(() => {
+          setOpenApps((prev) => 
+            prev.includes(app.id) ? prev : [...prev, app.id]
+          );
+        }, index * 50); // 50ms delay between each app
+      });
+    } else {
+      // Close all apps with staggered animation
+      apps.forEach((app, index) => {
+        setTimeout(() => {
+          setOpenApps((prev) => prev.filter((id) => id !== app.id));
+        }, index * 50);
+      });
+    }
+  }, [apps]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -198,6 +221,22 @@ export function DockBuilder() {
                       selectedTheme={selectedTheme}
                       onThemeChange={setSelectedTheme}
                     />
+                    {/* Separator */}
+                    <div className="mx-4 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+                    {/* Open All Apps Switch */}
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        id="open-all-apps"
+                        checked={allAppsOpen}
+                        onCheckedChange={handleToggleAllApps}
+                      />
+                      <label
+                        htmlFor="open-all-apps"
+                        className="text-sm font-medium text-zinc-600 dark:text-zinc-400 cursor-pointer"
+                      >
+                        Open All
+                      </label>
+                    </div>
                   </>
                 )}
               </div>
