@@ -4,12 +4,12 @@
   <p><strong>Create beautiful macOS dock images in seconds</strong></p>
   
   <p>
-    <a href="https://makedock.app">Live Demo</a> •
+    <a href="https://makedock.vercel.app">Live Demo</a> •
     <a href="https://www.producthunt.com/posts/makedock">Product Hunt</a> •
-    <a href="https://twitter.com/BendikMatej">Twitter</a>
+    <a href="https://x.com/BendikMatej">𝕏</a>
   </p>
 
-  <img src="public/preview.png" alt="MakeDock Preview" width="100%" />
+  https://github.com/user-attachments/assets/965d133e-3f8a-4ae3-a1dd-0f225667a2d5
 </div>
 
 ---
@@ -39,7 +39,7 @@ This tool is for you.
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) with App Router
+- **Framework:** [Next.js 16](https://nextjs.org/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
 - **Drag & Drop:** [@dnd-kit](https://dndkit.com/)
@@ -129,17 +129,12 @@ Contributions are welcome! Feel free to:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 Ideas for Future Features
+## 📝 Future Features
 
-- [ ] Windows taskbar support
 - [ ] More icon packs
-- [ ] Custom background upload
-- [ ] Share links
-- [ ] Animated GIF export
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+- [ ] More themes
+- [ ] Liquid Glass
+- [ ] Light/Dark mode icons
 
 ## 🙏 Acknowledgments
 
