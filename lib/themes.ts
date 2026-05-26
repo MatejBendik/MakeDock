@@ -105,6 +105,13 @@ export const themes: Theme[] = [
     solidColor: '#2498c9',
     dotColor: '#2e3192',
   },
+  {
+    id: 'transparent',
+    name: 'Transparent',
+    gradient: 'transparent',
+    solidColor: 'transparent',
+    dotColor: 'transparent',
+  },
 ];
 
 export const defaultTheme = themes[0];

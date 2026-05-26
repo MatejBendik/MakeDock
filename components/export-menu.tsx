@@ -134,6 +134,7 @@ export function ExportMenu({ dockRef, theme }: ExportMenuProps) {
   const [selectedSize, setSelectedSize] = useState<ExportSize>("2x");
   const [isExporting, setIsExporting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const isTransparentTheme = theme.id === "transparent";
 
   const getExportOptions = useCallback(
     () => ({
@@ -142,12 +143,16 @@ export function ExportMenu({ dockRef, theme }: ExportMenuProps) {
       onCloneEachNode: normalizeClonedNodeForExport,
       timeout: 60000,
       backgroundColor: null,
-      style: {
-        // Use the selected theme's gradient
-        background: theme.gradient,
-      },
+      ...(isTransparentTheme
+        ? {}
+        : {
+            style: {
+              // Use the selected theme's gradient
+              background: theme.gradient,
+            },
+          }),
     }),
-    [selectedSize, theme],
+    [isTransparentTheme, selectedSize, theme],
   );
 
   const handleExportPng = useCallback(async () => {
@@ -185,7 +190,7 @@ export function ExportMenu({ dockRef, theme }: ExportMenuProps) {
         fetchFn: fetchImageAsDataUrl,
         onCloneEachNode: normalizeClonedNodeForExport,
         timeout: 60000,
-        backgroundColor: theme.solidColor, // Use theme's solid color
+        backgroundColor: isTransparentTheme ? null : theme.solidColor,
       };
 
       const dataUrl = await domToSvg(dockRef.current, svgOptions);
@@ -205,7 +210,7 @@ export function ExportMenu({ dockRef, theme }: ExportMenuProps) {
     } finally {
       setIsExporting(false);
     }
-  }, [dockRef, selectedSize, theme]);
+  }, [dockRef, isTransparentTheme, selectedSize, theme]);
 
   const handleCopyImage = useCallback(async () => {
     if (!dockRef.current) return;
