@@ -16,7 +16,7 @@
 
 ## ✨ Features
 
-- **🎨 14 Beautiful Themes** — Gradient backgrounds inspired by ray.so
+- **🎨 15 Backdrops** — Gradient and transparent backgrounds inspired by ray.so
 - **🖱️ Drag & Drop** — Reorder apps with smooth drag and drop
 - **📱 Popular Apps** — Pre-loaded with popular macOS app icons
 - **🔗 Custom Icons** — Add any app via image URL
@@ -119,6 +119,7 @@ makedock/
 | Sunset | Orange gradient |
 | Aurora | Teal gradient |
 | Ocean | Deep blue gradient |
+| Transparent | No background |
 
 ## 🤝 Contributing
 
